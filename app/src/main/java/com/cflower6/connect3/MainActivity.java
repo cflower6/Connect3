@@ -26,84 +26,82 @@ public class MainActivity extends AppCompatActivity {
 
         int tapped = Integer.parseInt(counter.getTag().toString());
 
-        if(playerTurn == 0){
-            if(tapped > 2 && tapped < 6){
+        if (playerTurn == 0) {
+            if (tapped > 2 && tapped < 6) {
                 tapped -= 3;
-                if(gameboard[1][tapped] == 0){
+                if (gameboard[1][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.red);
                     gameboard[1][tapped] = 1;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
-            }else if(tapped >= 6){
+            } else if (tapped >= 6) {
                 tapped -= 6;
-                if(gameboard[2][tapped] == 0){
+                if (gameboard[2][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.red);
                     gameboard[2][tapped] = 1;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
-            }else{
-                if(gameboard[0][tapped] == 0){
+            } else {
+                if (gameboard[0][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.red);
                     gameboard[0][tapped] = 1;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
             }
-            int r = row(gameboard, playerTurn);
-            int c = col(gameboard, playerTurn);
-            int d = dia(gameboard, playerTurn);
+            int r = row(gameboard, 1);
+            int c = col(gameboard, 1);
+            int d = dia(gameboard, 1);
 
-            if(r == 1 || c == 1 || d == 1){
-                winner = true;
+            if (r == 1 || c == 1 || d == 1) {
+                Toast.makeText(MainActivity.this, "WINNER", Toast.LENGTH_LONG).show();
             }
+
             playerTurn += 1;
 
-        }else{
-            if(tapped > 2 && tapped < 6){
+        } else {
+
+            if (tapped > 2 && tapped < 6) {
                 tapped -= 3;
-                if(gameboard[1][tapped] == 0){
+                if (gameboard[1][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.yellow);
                     gameboard[1][tapped] = 2;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
-            }else if(tapped >= 6){
+            } else if (tapped >= 6) {
                 tapped -= 6;
-                if(gameboard[2][tapped] == 0){
+                if (gameboard[2][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.yellow);
                     gameboard[2][tapped] = 2;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
-            }else{
-                if(gameboard[0][tapped] == 0){
+            } else {
+                if (gameboard[0][tapped] == 0) {
                     ImageView RToken = (ImageView) view;
                     RToken.setImageResource(R.drawable.yellow);
                     gameboard[0][tapped] = 2;
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
                 }
             }
-            int r = row(gameboard, playerTurn);
-            int c = col(gameboard, playerTurn);
-            int d = dia(gameboard, playerTurn);
+            int r = row(gameboard, 2);
+            int c = col(gameboard, 2);
+            int d = dia(gameboard, 2);
 
-            if(r == 1 || c == 1 || d == 1){
-                winner = true;
+            if (r == 2 || c == 2 || d == 2) {
+                Toast.makeText(MainActivity.this, "WINNER", Toast.LENGTH_LONG).show();
             }
-                playerTurn -= 1;
+            playerTurn -= 1;
         }
-        if(winner){
-            Toast.makeText(MainActivity.this, "WINNER", Toast.LENGTH_LONG).show();
-        }
-
     }
 
     public int row(int[][] gameboard, int player){
@@ -115,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 winner = player;
             }else{
                 winner = 0;
+                return winner;
             }
             j++;
         }
@@ -130,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 winner = player;
             }else{
                 winner = 0;
+                return winner;
             }
             i++;
         }
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 winner = player;
             }else{
                 winner = 0;
+                return winner;
             }
             i++;
             j++;
