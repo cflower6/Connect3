@@ -57,77 +57,90 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.323">
+        app:layout_constraintVertical_bias="0.261">
 
         <TableRow
+            android:id="@+id/index0"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/TokenPostion1"
+                android:id="@+id/token1"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
                 android:layout_marginRight="10dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="0"/>
 
             <ImageView
-                android:id="@+id/TokenPostion2"
+                android:id="@+id/token2"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="1"/>
 
             <ImageView
-                android:id="@+id/TokenPostion3"
+                android:id="@+id/token3"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
                 android:layout_marginLeft="5dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="2"/>
         </TableRow>
 
         <TableRow
+            android:id="@+id/index1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/TokenPostion4"
+                android:id="@+id/token4"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="3"/>
 
             <ImageView
-                android:id="@+id/TokenPostion5"
+                android:id="@+id/token5"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="4"/>
 
             <ImageView
-                android:id="@+id/TokenPostion6"
+                android:id="@+id/token6"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="5"/>
         </TableRow>
 
         <TableRow
+            android:id="@+id/index2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:tag="6">
 
             <ImageView
-                android:id="@+id/TokenPostion7"
+                android:id="@+id/token7"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="6"/>
 
             <ImageView
-                android:id="@+id/TokenPostion8"
+                android:id="@+id/token8"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="7"/>
 
             <ImageView
-                android:id="@+id/TokenPostion9"
+                android:id="@+id/token9"
                 android:layout_width="122dp"
                 android:layout_height="124dp"
-                android:onClick="pick" />
+                android:onClick="pick"
+                android:tag="8"/>
         </TableRow>
 
     </TableLayout>
