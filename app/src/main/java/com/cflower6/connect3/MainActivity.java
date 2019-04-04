@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
                 gameState[tapped] = playerTurn;
                 if (playerTurn == 0) {
                     playerTurn += 1;
-                    gameTurn += 1;
                     TextView player1 = findViewById(R.id.Player1);
                     TextView player2 = findViewById(R.id.Player2);
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                     player2.animate().alpha(0f);
                 } else {
                     playerTurn -= 1;
-                    gameTurn += 1;
                     TextView player1 = findViewById(R.id.Player1);
                     TextView player2 = findViewById(R.id.Player2);
 
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+        gameTurn++;
         if(findWinner(gameState,gameWin) > -1) {
             gameActive = false;
             if (findWinner(gameState, gameWin) == 0) {
@@ -92,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn = findViewById(R.id.playBtn);
         btn.setVisibility(View.INVISIBLE);
         gameActive = true;
+        gameTurn = 0;
         for (int i = 0; i < gameState.length; i++) {
             gameState[i] = -1;
 
@@ -113,9 +112,14 @@ public class MainActivity extends AppCompatActivity {
         TextView winnerMessage = findViewById(R.id.winMessageP1);
         TextView winnerMessage2 = findViewById(R.id.winMessageP2);
         TextView drawMessage = findViewById(R.id.drawMessage);
+        TextView player1 = findViewById(R.id.Player1);
+        TextView player2 = findViewById(R.id.Player2);
+
         drawMessage.animate().alpha(0f);
-        winnerMessage.animate().alpha(1f);
+        winnerMessage.animate().alpha(0f);
         winnerMessage2.animate().alpha(0f);
+        player1.animate().alpha(1f);
+        player2.animate().alpha(0f);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
