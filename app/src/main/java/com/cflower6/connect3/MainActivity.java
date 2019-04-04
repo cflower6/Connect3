@@ -11,196 +11,91 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     int playerTurn = 0;
-    int roundCount = 0;
-    boolean winner = false;
-    int[][] gameboard = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    boolean gameActive = true;
+    int[] gameState = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
+    int[][] gameWin = {{0,1,2},{3,4,5},{6,7,8}, {0,3,6},{1,4,7},{2,5,8}, {0,4,8},{2,4,6}};
 
     public void pick(View view) {
 
         ImageView counter = (ImageView) view;
 
         int tapped = Integer.parseInt(counter.getTag().toString());
+        if(gameActive) {
+            if (gameState[tapped] == -1) {
+                gameState[tapped] = playerTurn;
+                if (playerTurn == 0) {
+                    playerTurn += 1;
+                    TextView player1 = findViewById(R.id.Player1);
+                    TextView player2 = findViewById(R.id.Player2);
 
+                    counter.setImageResource(R.drawable.red);
 
-        if (playerTurn == 0) {
-            roundCount += 1;
-
-            TextView player1 =  findViewById(R.id.Player1);
-            TextView player2 =  findViewById(R.id.Player2);
-            player1.animate().alpha(1f).setDuration(100);
-            player2.animate().alpha(0f).setDuration(100);
-
-            if (tapped > 2 && tapped < 6) {
-                tapped -= 3;
-                if (gameboard[1][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.red);
-                    gameboard[1][tapped] = 1;
+                    player1.animate().alpha(1f);
+                    player2.animate().alpha(0f);
                 } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
+                    playerTurn -= 1;
+                    TextView player1 = findViewById(R.id.Player1);
+                    TextView player2 = findViewById(R.id.Player2);
+
+                    counter.setImageResource(R.drawable.yellow);
+
+                    player1.animate().alpha(0f);
+                    player2.animate().alpha(1f);
                 }
-            } else if (tapped >= 6) {
-                tapped -= 6;
-                if (gameboard[2][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.red);
-                    gameboard[2][tapped] = 1;
-                } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
-                }
+            }
+        }
+
+        if(findWinner(gameState,gameWin) > -1) {
+            gameActive = false;
+            if (findWinner(gameState, gameWin) == 0) {
+                TextView win1Message = findViewById(R.id.winMessageP1);
+                win1Message.animate().alpha(1f);
             } else {
-                if (gameboard[0][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.red);
-                    gameboard[0][tapped] = 1;
-                } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
-                }
+                TextView win2Message = findViewById(R.id.winMessageP2);
+                win2Message.animate().alpha(1f);
             }
 
-            int r = row(gameboard, 1);
-            int c = col(gameboard, 1);
-            int d = dia(gameboard, 1);
-
-            if (r == 1 || c == 1 || d == 1) {
-                TextView winnerMessage = findViewById(R.id.winMessageP1);
-                winnerMessage.animate().alpha(1f);
-                winner = true;
-            }
-
-            if(winner == true){
-                Button playAgainBtn = findViewById(R.id.playBtn);
-                playAgainBtn.setVisibility(View.VISIBLE);
-            }
-            playerTurn += 1;
-
-        } else {
-            roundCount += 1;
-
-            TextView player1 =  findViewById(R.id.Player1);
-            TextView player2 =  findViewById(R.id.Player2);
-            player1.animate().alpha(0f).setDuration(100);
-            player2.animate().alpha(1f).setDuration(100);
-
-            if (tapped > 2 && tapped < 6) {
-                tapped -= 3;
-                if (gameboard[1][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.yellow);
-                    gameboard[1][tapped] = 2;
-                } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
-                }
-            } else if (tapped >= 6) {
-                tapped -= 6;
-                if (gameboard[2][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.yellow);
-                    gameboard[2][tapped] = 2;
-                } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                if (gameboard[0][tapped] == 0) {
-                    ImageView RToken = (ImageView) view;
-                    RToken.setImageResource(R.drawable.yellow);
-                    gameboard[0][tapped] = 2;
-                } else {
-                    Toast.makeText(MainActivity.this, "Can't do that", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            int r = row(gameboard, 2);
-            int c = col(gameboard, 2);
-            int d = dia(gameboard, 2);
-
-            if (r == 2 || c == 2 || d == 2) {
-                TextView winnerMessage2 = findViewById(R.id.winMessageP2);
-                winnerMessage2.animate().alpha(1f);
-                winner = true;
-            }
-            if(winner){
-                Button playAgainBtn = findViewById(R.id.playBtn);
-                playAgainBtn.setVisibility(View.VISIBLE);
-            }
-            playerTurn -= 1;
-        }
-    }
-
-    public int row(int[][] gameboard, int player){
-        int winner = 0;
-        int i = 0;
-        int j = 0;
-        while(j < 3){
-            if(gameboard[i][j] == player){
-                winner = player;
-            }else{
-                winner = 0;
-                return winner;
-            }
-            j++;
-        }
-        return winner;
-    }
-
-    public int col(int[][] gameboard, int player){
-        int winner = 0;
-        int i = 0;
-        int j = 0;
-        while(i < 3){
-            if(gameboard[i][j] == player){
-                winner = player;
-            }else{
-                winner = 0;
-                return winner;
-            }
-            i++;
+            Button playAgain = findViewById(R.id.playBtn);
+            playAgain.setVisibility(View.VISIBLE);
         }
 
-        return winner;
     }
 
-    public int dia(int[][] gameboard, int player){
-        int winner = 0;
-        int i = 0;
-        int j = 0;
-        while(i < 3){
-            if (gameboard[i][j] == player){
-                winner = player;
-            }else{
-                winner = 0;
-                return winner;
+    public int findWinner(int[] gameState, int[][] gameWin){
+        int playerThatWon = -1;
+
+        for(int[] g : gameWin){
+            if(gameState[g[0]] == gameState[g[1]] && gameState[g[1]] == gameState[g[2]] && gameState[g[0]] != -1){
+                playerThatWon = gameState[g[0]];
             }
-            i++;
-            j++;
         }
-        return winner;
+        return playerThatWon;
     }
 
-    public void playAgain(View view){
+
+
+    public void playAgain (View view){
         Button btn = findViewById(R.id.playBtn);
         btn.setVisibility(View.INVISIBLE);
-        for(int i = 0; i < gameboard.length; i++){
-            for(int j = 0; j < gameboard[i].length; j++){
-                gameboard[i][j] = 0;
-            }
+        gameActive = true;
+        for (int i = 0; i < gameState.length; i++) {
+            gameState[i] = -1;
+
         }
 
         TableRow ind1 = findViewById(R.id.index0);
         TableRow ind2 = findViewById(R.id.index1);
         TableRow ind3 = findViewById(R.id.index2);
-        for(int i = 0; i < ind1.getChildCount(); i++){
+        for (int i = 0; i < ind1.getChildCount(); i++) {
             ((ImageView) ind1.getChildAt(i)).setImageResource(0);
         }
-        for(int i = 0; i < ind2.getChildCount(); i++){
+        for (int i = 0; i < ind2.getChildCount(); i++) {
             ((ImageView) ind2.getChildAt(i)).setImageResource(0);
         }
-        for(int i = 0; i < ind3.getChildCount(); i++){
+        for (int i = 0; i < ind3.getChildCount(); i++) {
             ((ImageView) ind3.getChildAt(i)).setImageResource(0);
         }
 
