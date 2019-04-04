@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     int playerTurn = 0;
     boolean gameActive = true;
+    int gameTurn = 0;
     int[] gameState = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
     int[][] gameWin = {{0,1,2},{3,4,5},{6,7,8}, {0,3,6},{1,4,7},{2,5,8}, {0,4,8},{2,4,6}};
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 gameState[tapped] = playerTurn;
                 if (playerTurn == 0) {
                     playerTurn += 1;
+                    gameTurn += 1;
                     TextView player1 = findViewById(R.id.Player1);
                     TextView player2 = findViewById(R.id.Player2);
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     player2.animate().alpha(0f);
                 } else {
                     playerTurn -= 1;
+                    gameTurn += 1;
                     TextView player1 = findViewById(R.id.Player1);
                     TextView player2 = findViewById(R.id.Player2);
 
@@ -58,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 win2Message.animate().alpha(1f);
             }
 
+            Button playAgain = findViewById(R.id.playBtn);
+            playAgain.setVisibility(View.VISIBLE);
+        }
+
+        if(findWinner(gameState, gameWin) < 0 && gameTurn == 9){
+            TextView drawMessage = findViewById(R.id.drawMessage);
+            drawMessage.animate().alpha(1f);
+            gameActive = false;
             Button playAgain = findViewById(R.id.playBtn);
             playAgain.setVisibility(View.VISIBLE);
         }
@@ -101,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
 
         TextView winnerMessage = findViewById(R.id.winMessageP1);
         TextView winnerMessage2 = findViewById(R.id.winMessageP2);
-        winnerMessage.animate().alpha(0f);
+        TextView drawMessage = findViewById(R.id.drawMessage);
+        drawMessage.animate().alpha(0f);
+        winnerMessage.animate().alpha(1f);
         winnerMessage2.animate().alpha(0f);
     }
     @Override
